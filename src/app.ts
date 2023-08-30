@@ -1,9 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import fs from 'fs';
-import https from 'https';
-import { createServer } from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
