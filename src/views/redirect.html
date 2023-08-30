@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Redirecting...</title>
+    <script>
+        function getQueryParameters() {
+            const url = window.location.href
+            const queryParams = {};
+            const urlParts = url.split('?');
+
+            if (urlParts.length > 1) {
+                const queryString = urlParts[1];
+                const pairs = queryString.split('&');
+
+                for (const pair of pairs) {
+                    const [key, value] = pair.split('=');
+                    queryParams[key] = value;
+                }
+            }
+
+            return queryParams;
+        }
+
+        setTimeout(function () {
+            const queryParams = getQueryParameters();
+            window.location.href = `app://advancedlux/${queryParams.type}?token=${queryParams.token}`;
+        }, 1000);
+
+    </script>
+</head>
+
+<body>
+    <p>Please wait, you are being redirected...</p>
+</body>
+
+</html>

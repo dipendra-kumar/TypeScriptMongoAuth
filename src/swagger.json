@@ -1,0 +1,906 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Payments App API"
+  },
+  "basePath": "/api/v1",
+  "schemes": [
+    "https"
+  ],
+  "host": "stgn.appsndevs.com:6094",
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/users/checkEmailAvailability": {
+      "post": {
+        "summary": "Check if an email address is available",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "description": "The email address to be checked for availability"
+          }
+        ],
+        "tags": [
+          "User Availability"
+        ],
+        "responses": {
+          "200": {
+            "description": "Email address is available",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Email address not available",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/checkPhoneNumberAvailability": {
+      "post": {
+        "summary": "Check if a phone number is available",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "phoneNumber",
+            "type": "string",
+            "required": true,
+            "description": "The phone number to be checked for availability"
+          }
+        ],
+        "tags": [
+          "User Availability"
+        ],
+        "responses": {
+          "200": {
+            "description": "Phone number is available",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Phone number not available",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/registerUser": {
+      "post": {
+        "summary": "Register a new user",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "first_name",
+            "type": "string",
+            "required": true,
+            "description": "First name of the user"
+          },
+          {
+            "in": "formData",
+            "name": "last_name",
+            "type": "string",
+            "required": true,
+            "description": "Last name of the user"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "description": "Email address of the user"
+          },
+          {
+            "in": "formData",
+            "name": "phone",
+            "type": "string",
+            "required": true,
+            "description": "Phone number of the user"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "required": true,
+            "description": "Password for the user"
+          },
+          {
+            "in": "formData",
+            "name": "address",
+            "type": "string",
+            "required": true,
+            "description": "Address of the user"
+          },
+          {
+            "in": "formData",
+            "name": "zip_code",
+            "type": "string",
+            "required": true,
+            "description": "Zip code of the user"
+          },
+          {
+            "in": "formData",
+            "name": "city",
+            "type": "string",
+            "required": true,
+            "description": "City of the user"
+          },
+          {
+            "in": "formData",
+            "name": "state",
+            "type": "string",
+            "required": true,
+            "description": "State of the user"
+          }
+        ],
+        "tags": [
+          "User Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/getUserDetails": {
+      "get": {
+        "summary": "Get user details",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          }
+        ],
+        "tags": [
+          "User Details"
+        ],
+        "responses": {
+          "200": {
+            "description": "User details fetched successfully",
+            "schema": {
+              "$ref": "#/components/schemas/UserDetailsResponse"
+            }
+          },
+          "400": {
+            "description": "User doesn't exist",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/uploadProfile": {
+      "post": {
+        "summary": "Upload user profile picture",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Bearer token"
+          },
+          {
+            "in": "formData",
+            "name": "profile_pic",
+            "type": "file",
+            "required": true,
+            "description": "User's profile picture image file"
+          }
+        ],
+        "tags": [
+          "Update Profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile picture uploaded successfully",
+            "schema": {
+              "$ref": "#/components/schemas/UploadProfileResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/verifyEmail": {
+      "patch": {
+        "summary": "Reset user password using a token.",
+        "tags": [
+          "Update Profile"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Token received for email verification mail.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "your_verification_token_here"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified successfully successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "message": "Email verification complete"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "message": "Authentication token required"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 401,
+                  "message": "Invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 403,
+                  "message": "Token expired"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "User login",
+        "consumes": [
+          "application/x-www-form-urlencoded",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "description": "Email address or user id"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "required": true,
+            "description": "Password "
+          }
+        ],
+        "tags": [
+          "User Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "schema": {
+              "$ref": "#/components/schemas/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "User not found",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/forgotPassword": {
+      "post": {
+        "summary": "Initiate password reset for a user.",
+        "consumes": [
+          "application/x-www-form-urlencoded",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "description": "Email address of the user"
+          }
+        ],
+        "tags": [
+          "Forgot & Reset Password"
+        ],
+        "responses": {
+          "200": {
+            "description": "Mail sent successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "message": "Mail sent successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/resetPassword": {
+      "patch": {
+        "summary": "Reset user password using a token.",
+        "tags": [
+          "Forgot & Reset Password"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Token received for password reset.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "your_reset_token_here"
+          },
+          {
+            "name": "newPassword",
+            "in": "formData",
+            "description": "Your new password",
+            "required": true,
+            "type": "string",
+            "example": "MyStrongP@ssword32"
+          },
+          {
+            "name": "confirmNewPassword",
+            "in": "formData",
+            "description": "Your new password and confirm password must be same.",
+            "required": true,
+            "type": "string",
+            "example": "MyStrongP@ssword32"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "message": "Password changed successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 400,
+                  "message": "Bad Request",
+                  "errors": [
+                    "Passwords must contain at least one lowercase letter, one uppercase letter, and one number.",
+                    "Passwords do not match."
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/updateLoginHistory": {
+      "post": {
+        "summary": "Update user login history",
+        "description": "Retrieve the login history of a user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Your authentication token",
+            "required": true,
+            "schema": {
+              "type": "formData"
+            },
+            "example": "your_auth_token_here"
+          },
+          {
+            "name": "latitude",
+            "in": "formData",
+            "description": "Location latitude of the device",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "example": "68.25"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Location longitude of the device",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "example": "108.4567"
+          },
+          {
+            "name": "device_id",
+            "in": "formData",
+            "description": "Device id of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "DellLattitude1"
+          },
+          {
+            "name": "device_info",
+            "in": "formData",
+            "description": "Device information of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Samsung Galaxy S23 Ultra"
+          }
+        ],
+        "tags": [
+          "Login History"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with login history",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "message": "Login data fetched successfully",
+                  "data": {
+                    "user_id": "ramtirth",
+                    "login_history": [
+                      {
+                        "location": {
+                          "latitude": 69.69,
+                          "longitude": 108.4567
+                        },
+                        "device_id": "ABC123",
+                        "date_time": "21/08/2023 11:39:57"
+                      },
+                      {
+                        "location": {
+                          "latitude": 70.1234,
+                          "longitude": 120.9876
+                        },
+                        "device_id": "XYZ789",
+                        "date_time": "20/08/2023 15:20:30"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "code": 400,
+                    "message": "Bad Request",
+                    "errors": [
+                      "Invalid user ID provided."
+                    ]
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "code": 401,
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/getLoginHistory": {
+      "get": {
+        "summary": "Retrieve User Login History",
+        "description": "Retrieve the login history of a user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Your authentication token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "your_auth_token_here"
+          }
+        ],
+        "tags": [
+          "Login History"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with login history",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": 200,
+                  "message": "Login data fetched successfully",
+                  "data": {
+                    "user_id": "ramtirth",
+                    "login_history": [
+                      {
+                        "location": {
+                          "latitude": 69.69,
+                          "longitude": 108.4567
+                        },
+                        "device_id": "ABC123",
+                        "date_time": "21/08/2023 11:39:57"
+                      },
+                      {
+                        "location": {
+                          "latitude": 70.1234,
+                          "longitude": 120.9876
+                        },
+                        "device_id": "XYZ789",
+                        "date_time": "20/08/2023 15:20:30"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "code": 400,
+                    "message": "Bad Request",
+                    "errors": [
+                      "Invalid user ID provided."
+                    ]
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "code": 401,
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "ApiResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 200
+            },
+            "message": {
+              "type": "string",
+              "example": "Success"
+            }
+          }
+        },
+        "UserDetailsResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 200
+            },
+            "message": {
+              "type": "string",
+              "example": "User details fetched successfully"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "ramtirth"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "Ramtirth"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "Mallick"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "ramtirth@example.com"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "123 Main St, City"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+1234567890"
+                },
+                "profile_pic": {
+                  "type": "string",
+                  "example": "https://example.com/profile.jpg"
+                }
+              }
+            }
+          }
+        },
+        "LoginRequest": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "ramtirth@example.com"
+            },
+            "password": {
+              "type": "string",
+              "example": "Pass@123"
+            }
+          }
+        },
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 200
+            },
+            "message": {
+              "type": "string",
+              "example": "Login successful"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "ramtirth"
+                },
+                "access_token": {
+                  "type": "string",
+                  "example": "your_access_token_here"
+                }
+              }
+            }
+          }
+        },
+        "ForgotPasswordRequest": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "ramtirth@example.com"
+            }
+          }
+        },
+        "ResetPasswordRequest": {
+          "type": "object",
+          "properties": {
+            "newPassword": {
+              "type": "string",
+              "example": "NewPass@123"
+            },
+            "confirmNewPassword": {
+              "type": "string",
+              "example": "NewPass@123"
+            }
+          }
+        },
+        "UploadProfileResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 200
+            },
+            "message": {
+              "type": "string",
+              "example": "Profile picture uploaded successfully"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "profile_pic_url": {
+                  "type": "string",
+                  "example": "https://example.com/profile.jpg"
+                }
+              }
+            }
+          }
+        },
+        "ErrorResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "example": 400
+            },
+            "message": {
+              "type": "string",
+              "example": "Bad Request"
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "example": "Invalid user ID provided."
+              }
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "BearerAuth": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header"
+        }
+      }
+    }
+  }
+}
