@@ -35,4 +35,3 @@ npm install
 # run code
 
 npm start
-npm run dev
