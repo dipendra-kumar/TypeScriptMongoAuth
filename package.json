@@ -1,11 +1,11 @@
 {
-  "name": "payment-app",
+  "name": "typescript-mongo-auth",
   "version": "1.0.0",
-  "description": "My cool TypeScript app",
+  "description": "A secure authentication system using TypeScript and MongoDB.",
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "compile": "ts-node build.ts && tsc",
+    "build": "ts-node build.ts && tsc",
     "dev": "nodemon ./src/app.ts",
     "dev:debug": "nodemon --exec \"node -r ts-node/register --inspect-brk\" server/index.ts | pino-pretty",
     "lint": "eslint -c .eslintrc.js \"{server, test}/**/*.{js,ts,tsx}\" --quiet",
