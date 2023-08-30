@@ -32,10 +32,7 @@ To get started with this template, clone the repo and follow the given instructi
 
 npm install
 
-# run in development mode
+# run code
 
+npm start
 npm run dev
-
-# run tests
-
-npm run test
