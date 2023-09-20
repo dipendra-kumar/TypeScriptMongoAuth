@@ -37,7 +37,7 @@ app.use(
 app.use('/uploads', express.static(`${__dirname}/uploads`));
 app.use('/api/v1', appRouter);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 
 app.listen(port, () => {
   logger.info('Server is running on ' + port);

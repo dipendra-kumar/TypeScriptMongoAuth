@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - ./db/dev:/data/db
+  tsmongoauth-app:
+    container_name: tsmongoauth-app
+    build: 
+      context: .
+      dockerfile: ./docker/dev/api.dockerfile
+    restart: always
+    depends_on:
+      - mongodb
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/app
+    environment:
+      - SESSION_SECRET=abcdefghijklmnopqrstuvwxyz
+      - TOKEN_HASH=1234567890!@#$%^&*(((())))
+      - DB_URL=mongodb://root:admin@mongodb:27017/admin

@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 import logger from 'src/helpers/logger/logger';
 
 
-const connectionUrl = process.env.DB_URL;
-
 
 const initDB = async () => {
+  const connectionUrl = process.env.DB_URL;
   try {
     if (!connectionUrl) {
       logger.error('No db url provided!');
